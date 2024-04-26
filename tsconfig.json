@@ -1,0 +1,48 @@
+{
+	"compilerOptions": {
+		"target": "esnext" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
+		"module": "esnext" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
+		"lib": [
+			"esnext",
+			"dom",
+			"dom.iterable",
+			"scripthost"
+		],
+		"jsx": "preserve",
+		"isolatedModules": true,
+		"strict": true,
+		"moduleResolution": "Node",
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"./src/*"
+			],
+		},
+		"types": [
+			"vite/client",
+			"element-plus/global",
+			"node"
+		],
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"allowImportingTsExtensions": true,
+		"allowJs": false,
+		"noEmit": true,
+		"sourceMap": true,
+		"noUnusedLocals": false,
+		"noImplicitAny": false
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.vue",
+		"src/**/*.tsx",
+		"src/**/*.d.ts",
+	],
+	"exclude": [
+		"node_modules",
+		"dist"
+	]
+}
