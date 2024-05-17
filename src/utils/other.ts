@@ -1,16 +1,14 @@
-import { nextTick, defineAsyncComponent } from 'vue';
+import { nextTick } from 'vue';
 import type { App } from 'vue';
 import * as svg from '@element-plus/icons-vue';
 import router from '@/router/index';
 import pinia from '@/stores/index';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '@/stores/themeConfig';
-import { i18n } from '@/i18n/index';
-import { Local } from '@/utils/storage';
+import  i18n from '@/i18n/index';
 import { verifyUrl } from '@/utils/toolsValidate';
 
 // 引入组件
-const SvgIcon = defineAsyncComponent(() => import('@/components/svgIcon/index.vue'));
 
 /**
  * 导出全局注册 element plus svg 图标
@@ -22,7 +20,6 @@ export function elSvg(app: App) {
 	for (const i in icons) {
 		app.component(`ele-${icons[i].name}`, icons[i]);
 	}
-	// app.component('SvgIcon', SvgIcon);
 }
 
 /**

@@ -17,7 +17,6 @@
 									<Mobile />
 								</el-tab-pane>
 							</el-tabs>
-							<div class="flex justify-center c-#409eff cursor pos-r" @click="router.push('/register')">注册</div>
 						</div>
 					</div>
 				</div>
@@ -35,7 +34,6 @@ import loginBg from '@/assets/login-bg.svg';
 const Account = defineAsyncComponent(() => import('@/views/login/component/account.vue'));
 const Mobile = defineAsyncComponent(() => import('@/views/login/component/mobile.vue'));
 
-const router = useRouter();
 
 // 定义变量内容
 const storesThemeConfig = useThemeConfig();

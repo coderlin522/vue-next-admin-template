@@ -29,24 +29,6 @@
 				</template>
 			</el-input>
 		</el-form-item>
-		<el-form-item class="login-animation3">
-			<el-col :span="13">
-				<el-input
-					text
-					maxlength="4"
-					:placeholder="$t('message.account.accountPlaceholder3')"
-					v-model="state.ruleForm.code"
-					clearable
-					autocomplete="off"
-				>
-					<template #prefix>
-						<el-icon class="el-input__icon"><ele-Position /></el-icon>
-					</template>
-				</el-input>
-			</el-col>
-			<el-col :span="1"></el-col>
-			<el-col :span="10"> <img :src="loginCodeImg" alt="" class="cursor" @click="getCode" /></el-col>
-		</el-form-item>
 		<el-form-item class="login-animation4">
 			<el-button
 				type="primary"
@@ -56,23 +38,22 @@
 				@click="onSignIn"
 				:loading="state.loading.signIn"
 			>
-				<span>{{ $t('message.account.accountBtnText') }}</span>
+				<span>登录</span>
 			</el-button>
 		</el-form-item>
 	</el-form>
 </template>
 
 <script setup lang="ts" name="loginAccount">
-import { reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
 import Cookies from 'js-cookie';
-import { initBackEndControlRoutes } from '@/router/backEnd';
 import { formatAxis } from '@/utils/formatTime';
 import { NextLoading } from '@/utils/loading';
-import { getLoginCode, userLogin } from '@/api/login';
+// import { userLogin } from '@/api/login';
 import { Local, Session } from '@/utils/storage';
+import { initFrontEndControlRoutes } from '@/router/fontEnd';
 
 // 定义变量内容
 const { t } = useI18n();
@@ -81,10 +62,8 @@ const router = useRouter();
 const state = reactive({
 	isShowPassword: false,
 	ruleForm: {
-		username: '', // 'xiaomi' macro
+		username: '',
 		password: '',
-		code: '',
-		uuid: '',
 	},
 	loading: {
 		signIn: false,
@@ -95,29 +74,18 @@ const state = reactive({
 const currentTime = computed(() => {
 	return formatAxis(new Date());
 });
-const loginCodeImg = ref('');
-const getCode = async () => {
-	const res = await getLoginCode();
-	if (res.code == 200 && res.img) {
-		loginCodeImg.value = 'data:image/gif;base64,' + res.img;
-		state.ruleForm.uuid = res.uuid;
-	}
-};
-getCode();
 // 登录
 const onSignIn = async () => {
 	state.loading.signIn = true;
 	// 存储 token 到浏览器缓存
-	const res = await userLogin(state.ruleForm).finally(() => (state.loading.signIn = false));
-	if (res.code == 200) {
+	// const res = await userLogin(state.ruleForm).finally(() => (state.loading.signIn = false));
+	setTimeout(async () => {
 		Cookies.set('username', state.ruleForm.username);
-		Cookies.set('token', res.data.token, { expires: 7 });
-		const isNoPower = await initBackEndControlRoutes();
+		Cookies.set('token', 'lin-cli-token', { expires: 7 });
+		const isNoPower = await initFrontEndControlRoutes();
 		signInSuccess(isNoPower);
-	} else {
-		console.log('验证码错误');
-		getCode();
-	}
+		state.loading.signIn = false;
+	}, 2000);
 };
 // 登录成功后的跳转
 const signInSuccess = (isNoPower: boolean | undefined) => {

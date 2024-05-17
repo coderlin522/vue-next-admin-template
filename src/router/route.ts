@@ -42,7 +42,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 		path: '/',
 		name: '/',
 		component: () => import('@/layout/index.vue'),
-		redirect: '/staging/interconnection/colorimeter',
+		redirect: '/personal',
 		meta: {
 			noCache: true,
 		},
@@ -54,7 +54,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 				meta: {
 					title: 'message.router.personal',
 					isLink: '',
-					isHide: true,
+					isHide: false,
 					noCache: true,
 					isAffix: false,
 					isIframe: false,

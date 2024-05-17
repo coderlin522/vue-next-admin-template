@@ -8,6 +8,7 @@ import { useUserInfo } from '@/stores/userInfo';
 import { useTagsViewRoutes } from '@/stores/tagsViewRoutes';
 import { useRoutesList } from '@/stores/routesList';
 import { NextLoading } from '@/utils/loading';
+import Cookies from 'js-cookie';
 
 // 前端控制路由
 
@@ -22,7 +23,7 @@ export async function initFrontEndControlRoutes() {
 	// 界面 loading 动画开始执行
 	if (window.nextLoading === undefined) NextLoading.start();
 	// 无 token 停止执行下一步
-	if (!Session.get('token')) return false;
+	if (!Cookies.get('token')) return false;
 	// 触发初始化用户信息 pinia
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I5F1HP
 	await useUserInfo(pinia).setUserInfos();
@@ -38,7 +39,7 @@ export async function initFrontEndControlRoutes() {
 /**
  * 添加动态路由
  * @method router.addRoute
- * @description 此处循环为 dynamicRoutes（/@/router/route）第一个顶级 children 的路由一维数组，非多级嵌套
+ * @description 此处循环为 dynamicRoutes（@/router/route）第一个顶级 children 的路由一维数组，非多级嵌套
  * @link 参考：https://next.router.vuejs.org/zh/api/#addroute
  */
 export async function setAddRoute() {
@@ -50,7 +51,7 @@ export async function setAddRoute() {
 /**
  * 删除/重置路由
  * @method router.removeRoute
- * @description 此处循环为 dynamicRoutes（/@/router/route）第一个顶级 children 的路由一维数组，非多级嵌套
+ * @description 此处循环为 dynamicRoutes（@/router/route）第一个顶级 children 的路由一维数组，非多级嵌套
  * @link 参考：https://next.router.vuejs.org/zh/api/#push
  */
 export async function frontEndsResetRoute() {
@@ -62,14 +63,14 @@ export async function frontEndsResetRoute() {
 
 /**
  * 获取有当前用户权限标识的路由数组，进行对原路由的替换
- * @description 替换 dynamicRoutes（/@/router/route）第一个顶级 children 的路由
+ * @description 替换 dynamicRoutes（@/router/route）第一个顶级 children 的路由
  * @returns 返回替换后的路由数组
  */
 export function setFilterRouteEnd() {
 	let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes));
 	// notFoundAndNoPower 防止 404、401 不在 layout 布局中，不设置的话，404、401 界面将全屏显示
 	// 关联问题 No match found for location with path 'xxx'
-	filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), ...notFoundAndNoPower];
+	filterRouteEnd[0].children = [...filterRouteEnd[0].children, ...notFoundAndNoPower];
 	return filterRouteEnd;
 }
 
@@ -77,7 +78,7 @@ export function setFilterRouteEnd() {
  * 获取当前用户权限标识去比对路由表（未处理成多级嵌套路由）
  * @description 这里主要用于动态路由的添加，router.addRoute
  * @link 参考：https://next.router.vuejs.org/zh/api/#addroute
- * @param chil dynamicRoutes（/@/router/route）第一个顶级 children 的下路由集合
+ * @param chil dynamicRoutes（@/router/route）第一个顶级 children 的下路由集合
  * @returns 返回有当前用户权限标识的路由数组
  */
 export function setFilterRoute(chil: any) {

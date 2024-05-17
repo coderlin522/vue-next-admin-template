@@ -6,18 +6,15 @@
 					<template v-if="!slots.search">
 						<template v-for="config in tableColumnConfig" :key="config.field">
 							<el-col :span="config.span ?? 6" v-if="config.searchType">
-								<el-form-item :label="$t(config.label)">
+								<el-form-item :label="config.label">
 									<template v-if="config.searchType == 'input'">
-										<el-input
-											v-model="searchFormProxy[`${config.field}`]"
-											:placeholder="`${$t('message.formI18nPlaceholder.pleaseInput')} ${$t(config.label)}`"
-										/>
+										<el-input v-model="searchFormProxy[`${config.field}`]" :placeholder="`请输入${config.label}`" />
 									</template>
 									<template v-if="config.searchType == 'select'">
 										<el-select
 											v-model="searchFormProxy[config.postField ? `${config.postField}` : `${config.field}`]"
 											:loading="config.selectLoading"
-											:placeholder="`${$t('message.formI18nPlaceholder.pleaseSelect')} ${$t(config.label)}`"
+											:placeholder="`请选择${config.label}`"
 										>
 											<el-option
 												v-for="item in config.searchSelectOptions"
@@ -50,8 +47,8 @@
 			</el-form>
 			<div class="search-btn" v-if="searchLength || slots.search">
 				<div class="btn-wrapper" v-if="!isHidden">
-					<el-button type="primary" @click="handleSearch">{{ $t('message.formBtnText.search') }}</el-button>
-					<el-button type="primary" @click="handleReset">{{ $t('message.formBtnText.reset') }}</el-button>
+					<el-button type="primary" @click="handleSearch">搜索</el-button>
+					<el-button type="primary" @click="handleReset">重置</el-button>
 				</div>
 			</div>
 		</div>
@@ -63,7 +60,7 @@
 		<div class="action">
 			<div class="flex" v-auth="tableConfig.leftMenuAuth">
 				<el-button v-if="tableConfig.addBtn" type="primary" @click="addDialogRef!.dialogVisible = true">
-					{{ $t(`${tableConfig['addBtnText']}`) }}
+					{{ tableConfig['addBtnText'] }}
 				</el-button>
 				<el-button v-if="tableConfig.multipleDeleteBtn" type="danger" @click="handleMultipleTableDelete">
 					批量删除
@@ -85,7 +82,7 @@
 					v-if="!config.hidden"
 					:show-overflow-tooltip="config.overflowTip"
 					:prop="config.field"
-					:label="$t(config.label)"
+					:label="config.label"
 					:align="config.align"
 				>
 					<template #default="{ row }" v-if="config.slot">
@@ -95,7 +92,7 @@
 			</template>
 
 			<el-table-column
-				:label="$t('message.formBtnText.action')"
+				label="操作"
 				v-if="tableConfig.tableActionColumn"
 				:fixed="tableConfig.tableActionFixed"
 			>

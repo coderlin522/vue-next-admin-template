@@ -140,11 +140,11 @@ export const useThemeConfig = defineStore('themeConfig', {
 		},
 	}),
 	actions: {
-		setThemeConfig(state,data: ThemeConfigState) {
-			state.themeConfig = data.themeConfig;
+		setThemeConfig(data: ThemeConfigState) {
+			this.themeConfig = data.themeConfig;
 		},
-		setThemeConfigIsCollapse(state,data: boolean) {
-			state.themeConfig.isCollapse = data;
+		setThemeConfigIsCollapse(data: boolean) {
+			this.themeConfig.isCollapse = data;
 		}
 	},
 });

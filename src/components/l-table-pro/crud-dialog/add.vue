@@ -14,13 +14,13 @@
 					<template v-for="formConfig in props.tableColumnConfig" :key="formConfig.field">
 						<el-form-item
 							v-if="formConfig.addable"
-							:label="$t(formConfig.label)"
+							:label="formConfig.label"
 							:prop="formConfig.postField ? formConfig.postField : formConfig.field"
 						>
 							<template v-if="formConfig.type === 'input'">
 								<el-input
 									v-model="addForm[formConfig.postField ? `${formConfig.postField}` : `${formConfig.field}`]"
-									:placeholder="`${$t('message.formI18nPlaceholder.pleaseInput')} ${$t(formConfig.label)}`"
+									:placeholder="`请输入${formConfig.label}`"
 								/>
 							</template>
 							<template v-if="formConfig.type === 'switch'">
@@ -32,7 +32,7 @@
 									v-model="addForm[`${formConfig.field}`]"
 									:type="formConfig.timeType"
 									value-format="YYYY"
-									:placeholder="$t('message.formI18nPlaceholder.pleaseSelect')"
+									placeholder="请选择"
 								/>
 							</template>
 							<template v-else-if="formConfig.type === 'select'">
@@ -42,7 +42,7 @@
 									collapse-tags
 									:multiple="formConfig.multiplable"
 									value-key="id"
-									:placeholder="`${$t('message.formI18nPlaceholder.pleaseInput')} ${$t(formConfig.label)}`"
+									:placeholder="`请输入${formConfig.label}`"
 								>
 									<el-option
 										v-for="item in formConfig.searchSelectOptions"

@@ -7,7 +7,7 @@ import { useKeepALiveNames } from '@/stores/keepAliveNames';
 import { useRoutesList } from '@/stores/routesList';
 import { Local, Session } from '@/utils/storage';
 import { staticRoutes, notFoundAndNoPower } from '@/router/route';
-import { initBackEndControlRoutes } from '@/router/backEnd';
+// import { initBackEndControlRoutes } from '@/router/backEnd';
 import { initFrontEndControlRoutes } from "./fontEnd";
 import Cookies from 'js-cookie';
 
@@ -97,20 +97,13 @@ router.beforeEach(async (to) => {
 			return (`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
 		} else if (token && to.path === '/login') {
 			NProgress.done();
-			return '/staging/interconnection/colorimeter'
+			return '/personal'
 		} else {
 			const storesRoutesList = useRoutesList(pinia);
 			const { routesList } = storeToRefs(storesRoutesList);
 			//系统默认后端生成路由，请根据实际需求修改
 			if (routesList.value.length == 0) {
 				await initFrontEndControlRoutes();
-				return { path: to.path, query: to.query };
-			} else {
-				return true
-			}
-
-			if (routesList.value.length == 0) {
-				await initBackEndControlRoutes();
 				return { path: to.path, query: to.query };
 			} else {
 				return true

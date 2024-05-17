@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { Session, Local } from '@/utils/storage';
-import { getUserInfo } from "@/api/login"
+// import { getUserInfo } from "@/api/login"
 /**
  * 用户信息
  * @methods setUserInfos 设置用户信息
@@ -26,19 +26,14 @@ export const useUserInfo = defineStore('userInfo', {
 			}
 		},
 		async getApiUserInfo() {
-			const res = await getUserInfo();
+			// const res = await getUserInfo();
 			const userInfos = {
-				username: "",
+				username: "lin",
 				avatar: "",
 				time: new Date().getTime(),
-				roles: [],
+				roles: ['common'],
 				authBtnList: [],
 			};
-			if (res.code == 200) {
-				userInfos.username = res.data.user.nickName;
-				userInfos.avatar = res.data.user.avatar;
-				userInfos.roles = res.data.roles;
-			}
 			Local.set('userInfo', userInfos);
 			return userInfos
 		},
