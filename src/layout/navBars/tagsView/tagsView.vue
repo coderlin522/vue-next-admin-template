@@ -254,7 +254,7 @@ const refreshCurrentTagsView = async (fullPath: string) => {
 	if (!item) return false;
 	await storesKeepALiveNames.delCachedView(item);
 	mittBus.emit('onTagsViewRefreshRouterView', fullPath);
-	if (item.meta?.noCache) storesKeepALiveNames.addCachedView(item);
+	if (item.meta?.isKeepAlive) storesKeepALiveNames.addCachedView(item);
 };
 // 3、关闭当前 tagsView：如果是设置了固定的（isAffix），不可以关闭
 const closeCurrentTagsView = (path: string) => {

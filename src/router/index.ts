@@ -48,7 +48,7 @@ export function formatFlatteningRoutes(arr: any) {
 
 /**
  * 一维数组处理成多级嵌套数组（只保留二级：也就是二级以上全部处理成只有二级，keep-alive 支持二级缓存）
- * @description noCache 处理 `name` 值，进行缓存。顶级关闭，全部不缓存
+ * @description isKeepAlive 处理 `name` 值，进行缓存。顶级关闭，全部不缓存
  * @link 参考：https://v3.cn.vuejs.org/api/built-in-components.html#keep-alive
  * @param arr 处理后的一维路由菜单数组
  * @returns 返回将一维数组重新处理成 `定义动态路由（dynamicRoutes）` 的格式
@@ -68,7 +68,7 @@ export function formatTwoStageRoutes(arr: any) {
 			newArr[0].children.push({ ...v });
 			// 存 name 值，keep-alive 中 include 使用，实现路由的缓存
 			// 路径：@/layout/routerView/parent.vue
-			if (newArr[0].meta.noCache && v.meta.noCache) {
+			if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive) {
 				cacheList.push(v.name);
 				const stores = useKeepALiveNames(pinia);
 				stores.setCacheKeepAlive(cacheList);

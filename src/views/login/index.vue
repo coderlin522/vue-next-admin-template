@@ -5,7 +5,7 @@
 		</div>
 		<div class="login-right flex">
 			<div class="login-right-warp flex-margin">
-				<div class="login-right-warp-mian">
+				<div class="login-right-warp-main">
 					<div class="login-right-warp-main-title">{{ storesThemeConfig.themeConfig.globalTitle }} 欢迎您！</div>
 					<div class="login-right-warp-main-form">
 						<div>
@@ -105,8 +105,8 @@ onMounted(() => {
 		.login-right-warp {
 			border: 1px solid var(--el-color-primary-light-3);
 			border-radius: 3px;
-			width: 500px;
-			min-height: 520px;
+			width: 480px;
+			height: 450px;
 			position: relative;
 			overflow: hidden;
 			background-color: var(--el-color-white);
@@ -166,7 +166,7 @@ onMounted(() => {
 					animation-delay: 2.1s;
 				}
 			}
-			.login-right-warp-mian {
+			.login-right-warp-main {
 				display: flex;
 				flex-direction: column;
 				height: 100%;

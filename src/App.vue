@@ -12,7 +12,6 @@ import { useTagsViewRoutes } from '@/stores/tagsViewRoutes';
 import { useThemeConfig } from '@/stores/themeConfig';
 import other from '@/utils/other';
 import { Local, Session } from '@/utils/storage';
-import mittBus from '@/utils/mitt';
 
 // 引入组件
 

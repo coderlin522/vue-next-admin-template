@@ -91,11 +91,7 @@
 				</el-table-column>
 			</template>
 
-			<el-table-column
-				label="操作"
-				v-if="tableConfig.tableActionColumn"
-				:fixed="tableConfig.tableActionFixed"
-			>
+			<el-table-column label="操作" v-if="tableConfig.tableActionColumn" :fixed="tableConfig.tableActionFixed">
 				<template #default="{ row }">
 					<template v-if="slots.action">
 						<slot name="action" :row="row"></slot>
@@ -124,8 +120,8 @@
 		<div class="pagination">
 			<el-pagination
 				hide-on-single-page
-				v-model:current-page="currentPage"
-				v-model:page-size="currentSize"
+				v-model:current-page="pagination.currentPage"
+				v-model:page-size="pagination.pageSize"
 				layout="total, sizes, prev, pager, next, jumper"
 				:page-sizes="[10, 20, 50, 100]"
 				:total="total"
@@ -164,7 +160,7 @@ const props = withDefaults(
 			pageSize: number;
 		};
 		total: number;
-		searchForm: Record<string, any>;
+		// searchForm: Record<string, any>;
 	}>(),
 	{
 		tableList: () => [],
@@ -174,32 +170,7 @@ const isHidden = ref(false);
 const slots = useSlots();
 const searchLength = computed(() => props.tableColumnConfig.filter((item) => item.searchType).length > 0);
 
-Promise.all(
-	props.tableColumnConfig.filter((v) => v.initOptionFn != undefined).map((v) => v.initOptionFn && v.initOptionFn(v))
-);
-
-// const emits = defineEmits<{
-// 	addActionClick: [form: any];
-// 	handleSearch: [searchForm: Record<string, any>];
-// 	handleReset;
-// 	'update:pagination';
-// 	'update:searchForm';
-// 	beforeEditDrawerOpen: [
-// 		{
-// 			row: any;
-// 			openLoading: () => void;
-// 			closeLoading: () => void;
-// 			setOption: (key: string, value: any) => void;
-// 			setForm: (key: string, value: any) => void;
-// 		}
-// 	];
-// 	beforeAdddialogOpen;
-// 	viewActionClick;
-// 	deleteActionClick;
-// 	editActionClick: [{ row: any; done: () => void }];
-// 	handleSizeChange;
-// 	handleCurrentChange;
-// }>();
+props.tableColumnConfig.filter((v) => v.initOptionFn != undefined).forEach((v) => v.initOptionFn && v.initOptionFn(v));
 
 const emits = defineEmits<{
 	(e: 'addActionClick', args: { form: any; done: () => void }): void;
@@ -227,26 +198,33 @@ const emits = defineEmits<{
 	(e: 'editActionClick', args: { row: any; done: () => void }): void;
 }>();
 
-const searchFormProxy = useVModelProps(props, 'searchForm', emits);
+// const searchFormProxy = useVModelProps(props, 'searchForm', emits);
+const searchFormProxy = defineModel<Record<string, any>>('searchForm', { required: true });
+
 const addDialogRef = ref<InstanceType<typeof lAdd>>();
 const editFormRef = ref<InstanceType<typeof lEdit>>();
 
-const currentPage = computed({
-	get() {
-		return props?.pagination?.currentPage;
-	},
-	set(value) {
-		emits('update:pagination', { ...props.pagination, currentPage: value });
-	},
-});
-const currentSize = computed({
-	get() {
-		return props?.pagination?.pageSize;
-	},
-	set(value) {
-		emits('update:pagination', { ...props.pagination, pageSize: value });
-	},
-});
+const pagination = defineModel<{
+	currentPage: number;
+	pageSize: number;
+}>('pagination', { required: true });
+
+// const currentPage = computed({
+// 	get() {
+// 		return props?.pagination?.currentPage;
+// 	},
+// 	set(value) {
+// 		emits('update:pagination', { ...props.pagination, currentPage: value });
+// 	},
+// });
+// const currentSize = computed({
+// 	get() {
+// 		return props?.pagination?.pageSize;
+// 	},
+// 	set(value) {
+// 		emits('update:pagination', { ...props.pagination, pageSize: value });
+// 	},
+// });
 
 const handleSearch = () => {
 	emits('handleSearch', searchFormProxy);
@@ -265,7 +243,7 @@ const handleMultipleTableDelete = () => {
 		confirmButtonText: '确定',
 		cancelButtonText: '取消',
 		type: 'warning',
-	}).then(async () => {
+	}).then(() => {
 		emits('multipleDeleteClick', multipleSelection.value);
 	});
 };

@@ -22,7 +22,7 @@ declare module 'vue-router' {
 		title?: string;
 		isLink?: string;
 		isHide?: boolean;
-		noCache?: boolean;
+		isKeepAlive?: boolean;
 		isAffix?: boolean;
 		isIframe?: boolean;
 		roles?: string[];
@@ -44,7 +44,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 		component: () => import('@/layout/index.vue'),
 		redirect: '/personal',
 		meta: {
-			noCache: true,
+			isKeepAlive: true,
 		},
 		children: [
 			{
@@ -55,7 +55,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 					title: 'message.router.personal',
 					isLink: '',
 					isHide: false,
-					noCache: true,
+					isKeepAlive: true,
+					isAffix: false,
+					isIframe: false,
+					icon: 'setting',
+				},
+			},
+			{
+				path: '/home',
+				name: 'home',
+				component: () => import('@/views/home/index.vue'),
+				meta: {
+					title: '首页',
+					isLink: '',
+					isHide: false,
+					isKeepAlive: true,
 					isAffix: false,
 					isIframe: false,
 					icon: 'setting',

@@ -62,7 +62,7 @@ onMounted(() => {
 		setTimeout(() => {
 			if (themeConfig.value.isCacheTagsView) {
 				let tagsViewArr: RouteItem[] = Session.get('tagsViewList') || [];
-				cachedViews.value = tagsViewArr.filter((item) => item.meta?.noCache).map((item) => item.name as string);
+				cachedViews.value = tagsViewArr.filter((item) => item.meta?.isKeepAlive).map((item) => item.name as string);
 			}
 		}, 0);
 	});

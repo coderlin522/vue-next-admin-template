@@ -53,7 +53,6 @@ import other from '@/utils/other';
 import { Session, Local } from '@/utils/storage';
 import { useRouter } from 'vue-router';
 import Cookies from 'js-cookie';
-import { i18n } from '@/i18n';
 
 // 引入组件
 const Search = defineAsyncComponent(() => import('@/layout/navBars/topBar/search.vue'));
